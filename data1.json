@@ -1,0 +1,88 @@
+﻿{
+    "PV1_4": {
+        "notesg": ""
+    },
+    "PV2_4": {
+        "total": 39.0,
+        "average": 13.0,
+        "decision": "ناجح",
+        "date": "2025-12-22",
+        "members": [
+            {
+                "member": "مفتش المقاطعة",
+                "job": "",
+                "fname": "",
+                "lname": ""
+            },
+            {
+                "member": "العضو الأول",
+                "job": "",
+                "fname": "",
+                "lname": ""
+            },
+            {
+                "member": "العضو الثاني",
+                "job": "",
+                "fname": "",
+                "lname": ""
+            }
+        ],
+        "notes": "توكلنا على الله"
+    },
+    "ADJOIN": {
+        "last_name": "بن محمد",
+        "first_name": "أحمد",
+        "latin_full_name": "Ben Mohamed Ahmed",
+        "birth_date": "21/11/1984",
+        "birth_place": "الأبيض سيدي الشيخ",
+        "birth_state": "البيض",
+        "install_date": "25/12/2024",
+        "assignment_institution": "سايح محمد البيوض",
+        "exam_institution": "محمد بوضياف المشرية",
+        "activity_institution": "حضري محمد 01 بالعين الصفراء",
+        "exam_date": "26/12/2025"
+    },
+    "Inspector": {
+        "inspector_name": "سماحي يوسف",
+        "specialty_code": "INT الإعلام الآلي الرقمنة الإتصالات",
+        "district": "النعامة 45",
+        "district_state": "النعامة",
+        "office": "مديرية التكوين المهني البيض",
+        "phone": "0699802562",
+        "email": "Youcefcfpa10@Gmail.com"
+    },
+    "PV2_2": {
+        "title": "مدى تحقيق إنجاز مهام الرقابة و الإنضباط",
+        "marks": [
+            "03.50",
+            "02.50",
+            "03.50",
+            "03.75",
+            "01.75"
+        ],
+        "base_total": "20.00",
+        "total": "15.00"
+    },
+    "PV2_3": {
+        "title": "تنظيم وتنشيط اللقاءات",
+        "marks1": [
+            "03.00",
+            "02.00",
+            "02.15",
+            "02.85"
+        ],
+        "base_total": "20.00",
+        "total1": "10.00"
+    },
+    "PV2_5": {
+        "title": "تنظيم وتنشيط اللقاءات",
+        "marks2": [
+            "03.75",
+            "03.25",
+            "04.00",
+            "03.00"
+        ],
+        "base_total": "20.00",
+        "total2": "14.00"
+    }
+}
