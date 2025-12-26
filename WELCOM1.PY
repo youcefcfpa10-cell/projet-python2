@@ -3,11 +3,21 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import os
 import json
-# تحديد المسار الحالي للملف
-current_dir = os.getcwd()
-password_file = os.path.join(current_dir, "passwords.json")
+from welcome_next import WelcomeNext  # استدعاء النافذة الثانية
 
-# التحقق إن كان الملف موجودًا، وإذا لم يكن، يتم إنشاؤه تلقائيًا
+# ---------------- تحديد base_path ديناميكي ----------------
+if getattr(sys, 'frozen', False):
+    base_path = sys._MEIPASS  # عند تشغيل EXE
+else:
+    base_path = os.path.dirname(os.path.abspath(__file__))
+
+def get_path(*paths):
+    return os.path.join(base_path, *paths)
+
+# ---------------- مسارات الملفات ----------------
+password_file = get_path("passwords.json")
+
+# التحقق من وجود الملف، وإن لم يكن موجودًا يتم إنشاؤه
 if not os.path.exists(password_file):
     with open(password_file, "w", encoding="utf-8") as f:
         json.dump({}, f, ensure_ascii=False, indent=4)
@@ -15,31 +25,24 @@ if not os.path.exists(password_file):
 else:
     print("📂 الملف موجود بالفعل:", password_file)
 
-# تحميل محتوى الملف
+# تحميل كلمات المرور
 with open(password_file, "r", encoding="utf-8") as f:
     passwords = json.load(f)
 
 print("Loaded passwords:", passwords)
-# ✅ إضافة دالة إدخال المستخدمين
+
 def add_password(username, password):
-    # قراءة البيانات الموجودة حاليًا
     with open(password_file, "r", encoding="utf-8") as f:
         data = json.load(f)
-
-    # إضافة المستخدم الجديد أو تحديثه
     data[username] = password
-
-    # حفظ البيانات في الملف من جديد
     with open(password_file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
-
     print(f"✅ تم حفظ كلمة المرور للمستخدم: {username}")
 
-
-# --- اختبار عملي ---
+# --- إضافة بعض المستخدمين التجريبيين ---
 add_password("IFEP", "1234")
 add_password("ITP", "12345")
-from welcome_next import WelcomeNext  # استدعاء النافذة الثانية
+
 
 class Ui_welcom(object):
     def setupUi(self, welcom):
@@ -47,15 +50,13 @@ class Ui_welcom(object):
         welcom.resize(950, 800)
         welcom.setStyleSheet("QDialog { background-color: #D35400; }")
 
-        icon_path = os.path.join("images", "ITP1.ICO")
+        icon_path = get_path("images", "ITP1.ICO")
         if os.path.exists(icon_path):
             welcom.setWindowIcon(QtGui.QIcon(icon_path))
         welcom.setWindowTitle("واجهة الدخول")
 
         self.attempts = 0
-
-        # ======= تحميل كلمات المرور من الملف =======
-        self.load_passwords()  # استدعاء دالة التحميل
+        self.load_passwords()
 
         # ===== العناوين =====
         self.label = QtWidgets.QLabel(welcom)
@@ -79,17 +80,17 @@ class Ui_welcom(object):
         # ===== الصور =====
         self.label_4 = QtWidgets.QLabel(welcom)
         self.label_4.setGeometry(QtCore.QRect(840, 5, 100, 110))
-        self.label_4.setPixmap(QtGui.QPixmap("images/drapo.jpg"))
+        self.label_4.setPixmap(QtGui.QPixmap(get_path("images", "drapo.jpg")))
         self.label_4.setScaledContents(True)
 
         self.label_5 = QtWidgets.QLabel(welcom)
         self.label_5.setGeometry(QtCore.QRect(10, 5, 100, 110))
-        self.label_5.setPixmap(QtGui.QPixmap("images/logo.jpg"))
+        self.label_5.setPixmap(QtGui.QPixmap(get_path("images", "logo.jpg")))
         self.label_5.setScaledContents(True)
 
         self.label_6 = QtWidgets.QLabel(welcom)
         self.label_6.setGeometry(QtCore.QRect(10, 135, 920, 380))
-        self.label_6.setPixmap(QtGui.QPixmap("images/CFPA.jpg"))
+        self.label_6.setPixmap(QtGui.QPixmap(get_path("images", "CFPA.jpg")))
         self.label_6.setScaledContents(True)
 
         # ===== إطار تسجيل الدخول =====
@@ -100,7 +101,7 @@ class Ui_welcom(object):
 
         self.label_7 = QtWidgets.QLabel(self.frame)
         self.label_7.setGeometry(QtCore.QRect(350, 5, 125, 130))
-        self.label_7.setPixmap(QtGui.QPixmap("images/cle.jpg"))
+        self.label_7.setPixmap(QtGui.QPixmap(get_path("images", "cle.jpg")))
         self.label_7.setScaledContents(True)
 
         font12 = QtGui.QFont("Arial", 12, QtGui.QFont.Bold)
@@ -129,7 +130,7 @@ class Ui_welcom(object):
         self.lineEdit_password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit_password.returnPressed.connect(lambda: self.on_ok_clicked(welcom))
         self.lineEdit_password.setStyleSheet("background-color: white; color: black;")
-        self.lineEdit_password.setFont(QtGui.QFont("Arial", 12, QtGui.QFont.Bold))
+        self.lineEdit_password.setFont(font12)
 
         self.checkBox = QtWidgets.QCheckBox(self.frame)
         self.checkBox.setGeometry(QtCore.QRect(40, 100, 21, 20))
@@ -138,7 +139,7 @@ class Ui_welcom(object):
 
         self.label_11 = QtWidgets.QLabel(welcom)
         self.label_11.setGeometry(QtCore.QRect(50, 530, 131, 140))
-        self.label_11.setPixmap(QtGui.QPixmap("images/enter.jpg"))
+        self.label_11.setPixmap(QtGui.QPixmap(get_path("images", "enter.jpg")))
         self.label_11.setScaledContents(True)
         self.label_11.mousePressEvent = lambda event: self.on_ok_clicked(welcom)
 
@@ -158,16 +159,13 @@ class Ui_welcom(object):
         self.progress_value = 0
         self.welcom_window = welcom
 
-    # ===== دالة تحميل كلمات المرور =====
+    # ===== دوال التعامل مع كلمات المرور =====
     def load_passwords(self):
-        print("Current working directory:", os.getcwd())  # 👈 أضفه هنا
-        if os.path.exists("passwords.json"):
-            with open("passwords.json", "r", encoding="utf-8") as f:
+        if os.path.exists(password_file):
+            with open(password_file, "r", encoding="utf-8") as f:
                 self.passwords = json.load(f)
         else:
-            # القيم الافتراضية إذا لم يوجد الملف
             self.passwords = {"IFEP": "1234", "ITP": "12345"}
-        print("Loaded passwords:", self.passwords)  # 👈 أضف هذا
 
     def toggle_password(self, state):
         self.lineEdit_password.setEchoMode(
@@ -205,7 +203,7 @@ class Ui_welcom(object):
             self.open_next_form()
 
     def save_passwords(self):
-        with open("passwords.json", "w", encoding="utf-8") as f:
+        with open(password_file, "w", encoding="utf-8") as f:
             json.dump(self.passwords, f, ensure_ascii=False, indent=4)
 
     def open_next_form(self):
